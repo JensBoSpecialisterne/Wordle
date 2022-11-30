@@ -25,7 +25,7 @@ namespace Wordle.Model
         // "R" as "Red" is equivalent to grey, meaning the letter isn't present.
         // "G" as "Green" indicates the letter is in the correct spot, same as it does in the GUI.
         // "B" as "Blue" indicates the letter is the word, but the wrong spot.
-        char[] status = new char[5];
+        public char[] status = new char[5];
 
         public string GetString()
         {
@@ -35,6 +35,7 @@ namespace Wordle.Model
         internal void SetStatus()
         {
             List<char> listCorrect = correct.ToList();
+            int max = 5;
 
             for(int i = 0; i < 5; i++)
             {
@@ -44,7 +45,7 @@ namespace Wordle.Model
                     listCorrect[i] = '!'; 
                 }
             }
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < max; i++)
             {
                 if (listCorrect[i] == '!')
                 {
@@ -54,6 +55,7 @@ namespace Wordle.Model
                 { 
                     status[i] = 'B';
                     listCorrect.Remove(letters[i]);
+                    max--;
                 }
                 else { status[i] = 'R'; }
             }

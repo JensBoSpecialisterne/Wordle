@@ -17,9 +17,22 @@ namespace Wordle
             LastResult = "";
         }
 
-        public void MakeGuess(string guess)
+        public Color GetColor(int input)
         {
-            LastResult = currentGame.MakeGuess(guess);
+            switch (currentGame.GetColor(input))
+            {
+                case 'G':
+                    return Color.Green;
+                case 'B':
+                    return Color.Yellow;
+                default:
+                    return Color.Gray;
+            }
+        }
+
+        public string MakeGuess(string guess)
+        {
+            return currentGame.MakeGuess(guess);
         }
     }
 }

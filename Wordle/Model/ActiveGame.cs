@@ -26,20 +26,25 @@ namespace Wordle.Model
                 switch (result)
                 {
                     case 'R':
-                        return "Invalid guess";
+                        return "Not in word list";
                     case 'G':
                         gameOver = true;
                         return "Game won";
                     default:
-                        if (gameHistory.Length() == 5)
+                        if (gameHistory.Length() > 6)
                         {
                             gameOver = true;
-                            return "Ran out of guesses. The correct word was: " + CorrectAnswer;
+                            return "Game lost";
                         }
                         return "";
                 }
             }
             return "Game over. Start new game";
+        }
+
+        public char GetColor(int input)
+        {
+            return gameHistory.GetColor(input);
         }
 
         public char AddGuess(string input)

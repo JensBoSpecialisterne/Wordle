@@ -20,6 +20,11 @@ namespace Wordle.Model
             PriorGuesses.Add(guess);
         }
 
+        public char GetColor(int input)
+        {
+            return PriorGuesses.Last().status[input];
+        }
+
         public int Length()
         {
             return PriorGuesses.Count;
