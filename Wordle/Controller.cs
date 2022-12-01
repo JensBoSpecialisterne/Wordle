@@ -17,6 +17,12 @@ namespace Wordle
             LastResult = "";
         }
 
+        public void NewGame()
+        {
+            currentGame = new();
+            LastResult = "";
+        }
+
         public Color GetColor(int input)
         {
             switch (currentGame.GetColor(input))
@@ -33,6 +39,11 @@ namespace Wordle
         public string MakeGuess(string guess)
         {
             return currentGame.MakeGuess(guess);
+        }
+
+        public string GetAnswer()
+        {
+            return currentGame.GetAnswer();
         }
     }
 }

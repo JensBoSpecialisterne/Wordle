@@ -18,7 +18,7 @@ namespace Wordle.Model
         static async Task<string> DownloadList()
         {
             HttpClient client = new();
-            string path = @"https://raw.githubusercontent.com/tabatkins/wordle-list/main/words";
+            string path = @"https://raw.githubusercontent.com/3b1b/videos/master/_2022/wordle/data/possible_words.txt";
             Stream stream = await client.GetStreamAsync(path);
             StreamReader reader = new(stream);
 
@@ -28,7 +28,8 @@ namespace Wordle.Model
         static public string Get()
         {
            int index = Utilities.random.Next(possibleWords.Count);
-           return possibleWords[index];
+            string test = possibleWords[index];
+           return test;
         }
 
         static public bool Contains(string input)

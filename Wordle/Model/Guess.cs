@@ -21,6 +21,8 @@ namespace Wordle.Model
         readonly char[] letters = new char[5];
         readonly char[] correct = new char[5];
 
+        int correctLetters = 0;
+
         // RGB used to indicate presence of the letter.
         // "R" as "Red" is equivalent to grey, meaning the letter isn't present.
         // "G" as "Green" indicates the letter is in the correct spot, same as it does in the GUI.
@@ -41,7 +43,8 @@ namespace Wordle.Model
             {
                 if ( letters[i] == correct[i] ) 
                 { 
-                    status[i] = 'G'; 
+                    status[i] = 'G';
+                    correctLetters++;
                     listCorrect[i] = '!'; 
                 }
             }
@@ -63,7 +66,7 @@ namespace Wordle.Model
 
         public bool IsCorrect()
         {
-            return letters == correct;
+            return correctLetters == 5;
         }
     }
 }

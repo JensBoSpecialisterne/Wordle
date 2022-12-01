@@ -1,8 +1,9 @@
+using System.Reflection.PortableExecutable;
 using System.Windows.Forms;
 
 namespace Wordle
 {
-    public partial class Form1 : Form
+    public partial class Wordle : Form
     {
         Controller controller;
 
@@ -17,9 +18,12 @@ namespace Wordle
         readonly int startPosition = 12;
 
         Label[,] grid;
+        Label[] alphabet;
         Label statusLabel;
 
-        public Form1()
+        HashSet<char> usedLetters;
+
+        public Wordle()
         {
             KeyPreview = true;
             KeyDown += new KeyEventHandler(Form1_KeyDown);
@@ -30,7 +34,10 @@ namespace Wordle
             input = new();
             currentGuess = 0;
             currentLetter = 0;
+            usedLetters = new();
+
             grid = new Label[wordLength, maxGuess];
+            alphabet = new Label[26];
 
             statusLabel = new()
             {
@@ -48,6 +55,29 @@ namespace Wordle
                 ImageAlign = ContentAlignment.TopCenter,
                 Location = new Point(103, 25),
             };
+            for(int i = 0; i<alphabet.Length; i++)
+            {
+                int position = i+'a';
+                char character = (char)position;
+                Label letter = new()
+                {
+                    Name = "letter " + (char)position,
+                    Height = 25,
+                    Width = 25,
+                    BackColor = Color.White,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point),
+                    MinimumSize = new Size(25, 25),
+                    ForeColor = Color.Black,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    UseCompatibleTextRendering = true,
+                    Location = new Point(300, 12 + 26 * i),
+                    AutoSize = false,
+                    Text = ((char)position).ToString().ToUpper()
+                };
+                alphabet[i] = letter;
+                Controls.Add(alphabet[i]);
+            }
             Controls.Add(statusLabel);
             statusLabel.BringToFront();
             statusLabel.Hide();
@@ -85,6 +115,7 @@ namespace Wordle
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            GameOver endScreen;
             HideStatus();
             if (currentGuess < 6)
             {
@@ -122,8 +153,13 @@ namespace Wordle
                                 break;
                             case "Game won":
                                 CorrectInput();
+                                endScreen = new(true, controller.GetAnswer(), this);
+                                endScreen.Show();
                                 break;
                             case "Game lost":
+                                CorrectInput();
+                                endScreen = new(false, controller.GetAnswer(), this);
+                                endScreen.Show();
                                 break;
                             case "":
                                 CorrectInput();
@@ -143,6 +179,9 @@ namespace Wordle
             }
             currentGuess++;
             currentLetter = 0;
+
+            usedLetters.UnionWith(input.ToArray());
+
             input.Clear();
         }
 
@@ -155,6 +194,22 @@ namespace Wordle
         private void HideStatus()
         {
             statusLabel.Hide();
+        }
+
+        public void NewGame()
+        {
+            controller.NewGame();
+            currentGuess = 0;
+            currentLetter = 0;
+            foreach(Label label in grid)
+            {
+                label.Text = "";
+                label.BackColor = Color.White;
+            }
+            foreach (Label label in alphabet)
+            {
+                label.BackColor = Color.White;
+            }
         }
     }
 }

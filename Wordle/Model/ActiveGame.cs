@@ -31,7 +31,7 @@ namespace Wordle.Model
                         gameOver = true;
                         return "Game won";
                     default:
-                        if (gameHistory.Length() > 6)
+                        if (gameHistory.Length() > 5)
                         {
                             gameOver = true;
                             return "Game lost";
@@ -59,6 +59,11 @@ namespace Wordle.Model
             if(guess.IsCorrect()) { return 'G'; }
 
             return 'B';
+        }
+
+        public string GetAnswer()
+        {
+            return CorrectAnswer;
         }
     }
 }

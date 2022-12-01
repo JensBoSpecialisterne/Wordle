@@ -1,6 +1,6 @@
 ﻿namespace Wordle
 {
-    partial class Form1
+    partial class Wordle
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // Wordle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 386);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(440, 386);
+            this.Name = "Wordle";
+            this.Text = "Wordle";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
