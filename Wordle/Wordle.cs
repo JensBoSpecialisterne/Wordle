@@ -21,8 +21,6 @@ namespace Wordle
         Label[] alphabet;
         Label statusLabel;
 
-        HashSet<char> usedLetters;
-
         public Wordle()
         {
             KeyPreview = true;
@@ -34,7 +32,6 @@ namespace Wordle
             input = new();
             currentGuess = 0;
             currentLetter = 0;
-            usedLetters = new();
 
             grid = new Label[wordLength, maxGuess];
             alphabet = new Label[26];
@@ -179,8 +176,6 @@ namespace Wordle
             }
             currentGuess++;
             currentLetter = 0;
-
-            usedLetters.UnionWith(input.ToArray());
 
             input.Clear();
         }
